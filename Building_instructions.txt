@@ -1,0 +1,37 @@
+cd to project main folder (where this file is located)
+
+To create .spec file, in case there is any dependency change:
+
+kivy /Users/hpais/Dropbox/hcp/documents/software/virtualenvs/sliderobot/bin/pyinstaller --windowed sliderobot.py
+
+Modify .spec file so that it works well with kivy:
+1. Add packages
+
+from kivy.tools.packaging.pyinstaller_hooks import install_hooks
+install_hooks(globals())
+
+2. Remove hookspath=None in Analysis() mehtod
+
+3. Add Dependency to COLLECT method
+Tree("/Users/hpais/hcp/projects/sliderobot/"),
+
+
+Run pyinstaller with modified .spec file
+
+kivy /Users/hpais/Dropbox/hcp/documents/software/virtualenvs/sliderobot/bin/pyinstaller
+sliderobot.spec
+
+
+Add missed pptx dependency file to sliderobot.app
+
+File is in
+/Users/hpais/Dropbox/hcp/documents/software/virtualenvs/sliderobot/lib/python2.7/site-packages/pptx/templates/default.pptx
+
+Should go to
+
+/Users/hpais/hcp/projects/sliderobot/dist/sliderobot.app/Contents/MacOS/pptx/templates/default.pptx
+
+Finally create .dmg to save space on distribution
+
+cd dist
+hdiutil create ./sliderobot.dmg -srcfolder sliderobot.app -ov
