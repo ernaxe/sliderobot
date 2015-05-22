@@ -1,0 +1,134 @@
+#:kivy 1.8.0
+
+Root:
+    selected_folder: selected_folder
+    coord_top: coord_top
+    coord_bottom: coord_bottom
+    coord_left: coord_left
+    coord_right: coord_right
+    slide_cols: slide_cols
+    slide_rows: slide_rows
+
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            size_hint_y: None
+            height: 100
+            text: ''
+        BoxLayout:
+            #padding: [50, 50, 50, 50]
+            size_hint_y: None
+            height: 30
+            Label:
+                text: 'Select folder where original figures are located'
+            Button:
+                text: 'Choose folder'
+                size_hint_x: None
+                width: 100
+                on_release: root.show_load()
+            Label:
+                size_hint_x: 0.2
+                text: ''
+
+
+        BoxLayout:
+            #padding: [50, 50, 50, 50]
+            size_hint_y: None
+            height: 30
+            Label:
+                text: 'Current selection:'
+            Label:
+                id: selected_folder
+                text: ''
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [50, 50, 50, 50]
+            Label:
+                size_hint_y: None
+                height: 30
+                text: 'Coordinates to crop (in pixels)'
+            BoxLayout:
+                size_hint_y: None
+                height: 30
+                orientation: 'horizontal'
+                Label:
+                    text: 'Top:'
+                TextInput:
+                    id: coord_top
+                    text: '100'
+                Label:
+                    text: 'Bottom'
+                TextInput:
+                    id: coord_bottom
+                    text: '500'
+            BoxLayout:
+                size_hint_y: None
+                height: 30
+                orientation: 'horizontal'
+                Label:
+                    text: 'Left:'
+                TextInput:
+                    id: coord_left
+                    text: '100'
+                Label:
+                    text: 'Right'
+                TextInput:
+                    id: coord_right
+                    text: '500'
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [50, 50, 50, 50]
+            Label:
+                size_hint_y: None
+                height: 30
+                text: 'Configuration of figures in the slide'
+            BoxLayout:
+                size_hint_y: None
+                height: 30
+                orientation: 'horizontal'
+                Label:
+                    text: 'Number of columns:'
+                TextInput:
+                    id: slide_cols
+                    text: '2'
+                Label:
+                    text: 'Number of rows'
+                TextInput:
+                    id: slide_rows
+                    text: '2'
+
+
+
+        Button:
+            size_hint_y: None
+            height: 30
+            text: 'Slide Robot, Go!'
+            on_release: root.process()
+        Label:
+            size_hint_y: None
+            height: 50
+            text: ''
+
+
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.store_input_folder(filechooser.path, filechooser.selection)
+
